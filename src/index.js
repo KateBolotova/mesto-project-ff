@@ -1,5 +1,6 @@
 import './styles/index.css';
 import {initialCards} from "./scripts/cards";
+import "./scripts/popup";
 
 const cardList = document.querySelector('.places__list');
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
@@ -22,3 +23,4 @@ initialCards.forEach((card) => {
     });
     cardList.append(cardElement);
 });
+
