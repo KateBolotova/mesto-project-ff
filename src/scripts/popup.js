@@ -1,15 +1,19 @@
 const editProfileButton = document.querySelector('.profile__edit-button');
-const popupEditProfile = document.querySelector('.popup_type_edit');
+export const popupEditProfile = document.querySelector('.popup_type_edit');
 const addCardButton = document.querySelector('.profile__add-button');
-const popupAddCard = document.querySelector('.popup_type_new-card');
+export const popupAddCard = document.querySelector('.popup_type_new-card');
+export const popupImage = document.querySelector('.popup_type_image');
 const popups = document.querySelectorAll('.popup');
 
-function closePopup(popup) {
-	popup.classList.remove('popup__active');
+export function closePopup(popup) {
+	popup.classList.remove('popup_is-opened');
+	if (popup.closePopupCallback !== undefined) {
+		popup.closePopupCallback();
+	}
 }
 
-function openPopup(popup) {
-	popup.classList.add('popup__active');
+export function openPopup(popup) {
+	popup.classList.add('popup_is-opened');
 }
 
 popups.forEach((popup) => {
@@ -43,3 +47,6 @@ document.addEventListener('keydown', (evt) => {
 	}
 })
 
+popups.forEach((popup) => {
+	popup.classList.add('popup_is-animated');
+})
