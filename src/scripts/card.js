@@ -23,11 +23,3 @@ export function deleteCard(cardElement, _) {
 export function toggleLike(cardElement, _) {
 	cardElement.querySelector('.card__like-button').classList.toggle('card__like-button_is-active');
 }
-
-export function addCardToEnd(cardList, cardElement) {
-	cardList.append(cardElement);
-}
-
-export function addCardToStart(cardList, cardElement) {
-	cardList.prepend(cardElement);
-}

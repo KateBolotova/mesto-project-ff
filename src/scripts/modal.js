@@ -9,13 +9,18 @@ export function closePopup(popup) {
 	}
 }
 
+function closePopupHandler(evt, popup) {
+	if (evt.key === 'Escape') {
+		closePopup(popup);
+	}
+}
+
 export function openPopup(popup) {
+	if (popup.openPopupCallback) {
+		popup.openPopupCallback();
+	}
 	popup.classList.add('popup_is-opened');
-	popup.keydownHandler = (evt) => {
-		if (evt.key === 'Escape') {
-			closePopup(popup);
-		}
-	};
+	popup.keydownHandler = (evt) => closePopupHandler(evt,  popup);
 	document.addEventListener('keydown', popup.keydownHandler);
 }
 

@@ -4,7 +4,7 @@ import "./scripts/card";
 import "./scripts/cards";
 import {initialCards} from "./scripts/cards";
 import {closePopup, openPopup, openPopupWithButton} from "./scripts/modal";
-import {addCardToEnd, addCardToStart, createCard, deleteCard, toggleLike} from "./scripts/card";
+import {createCard, deleteCard, toggleLike} from "./scripts/card";
 
 const editProfileButton = document.querySelector('.profile__edit-button');
 export const popupEditProfile = document.querySelector('.popup_type_edit');
@@ -44,6 +44,14 @@ function createDefaultCard(card) {
 		});
 }
 
+function addCardToEnd(cardList, cardElement) {
+	cardList.append(cardElement);
+}
+
+function addCardToStart(cardList, cardElement) {
+	cardList.prepend(cardElement);
+}
+
 initialCards.forEach((card) => {
 	const cardElement = createDefaultCard(card);
 	addCardToEnd(cardList, cardElement);
@@ -70,6 +78,10 @@ function handleEditProfileSubmit(evt) {
 
 editProfileForm.addEventListener('submit', handleEditProfileSubmit);
 
+popupEditProfile.openPopupCallback = () => {
+	nameInput.value = namePlace.textContent;
+	jobInput.value = jobPlace.textContent;
+}
 popupEditProfile.closePopupCallback = () => {
 	editProfileForm.reset();
 }
