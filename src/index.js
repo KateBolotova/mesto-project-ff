@@ -2,6 +2,7 @@ import './styles/index.css';
 import "./scripts/modal";
 import "./scripts/card";
 import "./scripts/cards";
+import {enableValidation, clearValidation} from "./scripts/validation";
 import {initialCards} from "./scripts/cards";
 import {closePopup, openPopup, openPopupWithButton} from "./scripts/modal";
 import {createCard, deleteCard, toggleLike} from "./scripts/card";
@@ -81,6 +82,7 @@ editProfileForm.addEventListener('submit', handleEditProfileSubmit);
 popupEditProfile.openPopupCallback = () => {
 	nameInput.value = namePlace.textContent;
 	jobInput.value = jobPlace.textContent;
+	clearValidation(editProfileForm, validationConfig);
 }
 popupEditProfile.closePopupCallback = () => {
 	editProfileForm.reset();
@@ -107,4 +109,15 @@ addCardForm.addEventListener('submit', handleAddCardSubmit);
 
 popupAddCard.closePopupCallback = () => {
 	addCardForm.reset();
+	clearValidation(addCardForm, validationConfig);
 }
+
+const validationConfig = {
+	formSelector: '.popup__form',
+	errorActiveClass: 'popup__input_error_active',
+	inputSelector: '.popup__input',
+	submitButtonSelector: '.popup__button',
+	errorSelectorFactory: (formInput) => `.popup__${formInput.id}_error`
+}
+
+enableValidation(validationConfig);
