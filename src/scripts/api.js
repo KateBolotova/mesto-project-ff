@@ -6,7 +6,7 @@ const config = {
 	}
 }
 
-const fetchAndReturnJSON = (url, method, body = {}) => {
+const fetchAndReturnJSON = (url, method, body = undefined) => {
 	return fetch(`${config.baseUrl}/${url}`, {
 		method: method,
 		headers: config.headers,
