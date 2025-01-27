@@ -6,6 +6,7 @@ import {enableValidation, clearValidation} from "./scripts/validation";
 import {initialCards} from "./scripts/cards";
 import {closePopup, openPopup, openPopupWithButton} from "./scripts/modal";
 import {createCard, deleteCard, toggleLike} from "./scripts/card";
+import {getInitialCards} from "./scripts/api.js";
 
 const editProfileButton = document.querySelector('.profile__edit-button');
 export const popupEditProfile = document.querySelector('.popup_type_edit');
@@ -53,10 +54,20 @@ function addCardToStart(cardList, cardElement) {
 	cardList.prepend(cardElement);
 }
 
-initialCards.forEach((card) => {
-	const cardElement = createDefaultCard(card);
-	addCardToEnd(cardList, cardElement);
-});
+getInitialCards()
+	.then((cards) => {
+		cards.forEach((card) => {
+			const cardElement = createDefaultCard(card);
+			addCardToEnd(cardList, cardElement);
+		});
+	})
+	.catch((err) => {
+		console.log(err);
+		initialCards.forEach((card) => {
+			const cardElement = createDefaultCard(card);
+			addCardToEnd(cardList, cardElement);
+		});
+	});
 
 const editProfileForm = document.forms['edit-profile'];
 const nameInput = editProfileForm.querySelector('input[name="name"]');
