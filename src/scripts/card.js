@@ -1,10 +1,32 @@
-export function createCard(cardTemplate, card, profile, deleteCallback, likeCallback, clickImageCallback) {
+export function createCard(cardTemplate, card, userId, deleteCallback, likeCallback, clickImageCallback) {
 	const cardElement = cardTemplate.cloneNode(true);
+	const cardTitle = cardElement.querySelector('.card__title');
 	const cardImage = cardElement.querySelector('.card__image');
 	const cardDeleteButton = cardElement.querySelector('.card__delete-button');
 	const cardLikeButton = cardElement.querySelector('.card__like-button');
+	const cardLikeCounter = cardElement.querySelector('.card__like-counter');
+	const likes = card.likes;
 
-	updateCard(cardElement, card, profile);
+	cardImage.src = card.link;
+	cardImage.alt = card.alt;
+	cardTitle.textContent = card.name;
+	
+	cardLikeCounter.textContent = likes.length;
+	if (likes.some(user => user._id === userId)) {
+		card.liked = true;
+		cardLikeButton.classList.add('card__like-button_is-active');
+	}
+	else {
+		card.liked = false;
+		cardLikeButton.classList.remove('card__like-button_is-active');
+	}
+	
+	if (card.owner._id !== userId) {
+		cardDeleteButton.classList.add('card__delete-button_not-active');
+	}
+	else {
+		cardDeleteButton.classList.remove('card__delete-button_not-active');
+	}
 
 	cardDeleteButton.addEventListener('click', () => deleteCallback(cardElement, card));
 	cardLikeButton.addEventListener('click', () => likeCallback(cardElement, card));
@@ -13,28 +35,19 @@ export function createCard(cardTemplate, card, profile, deleteCallback, likeCall
 	return cardElement;
 }
 
-export function updateCard(cardElement, card, profile) {
-	const cardImage = cardElement.querySelector('.card__image');
-	const cardTitle = cardElement.querySelector('.card__title');
+export function updateLikes(cardElement, likes, userId) {
 	const cardLikeCounter = cardElement.querySelector('.card__like-counter');
-	const cardDeleteButton = cardElement.querySelector('.card__delete-button');
 	const cardLikeButton = cardElement.querySelector('.card__like-button');
-	cardImage.src = card.link;
-	cardImage.alt = card.alt;
-	cardTitle.textContent = card.name;
-	cardLikeCounter.textContent = card.likes.length;
-	if (card.likes.some(user => user._id === profile._id)) {
-		card.liked = true;
+	
+	cardLikeCounter.textContent = likes.length;
+	if (likes.some(user => user._id === userId)) {
 		cardLikeButton.classList.add('card__like-button_is-active');
 	}
 	else {
-		card.liked = false;
 		cardLikeButton.classList.remove('card__like-button_is-active');
 	}
-	if (card.owner._id !== profile._id) {
-		cardDeleteButton.classList.add('card__delete-button_not-active');
-	} 
-	else {
-		cardDeleteButton.classList.remove('card__delete-button_not-active');
-	}
+}
+
+export function removeCard(cardElement) {
+	cardElement.remove();
 }

@@ -23,9 +23,3 @@ export function openPopup(popup) {
 	popup.keydownHandler = (evt) => closePopupHandler(evt,  popup);
 	document.addEventListener('keydown', popup.keydownHandler);
 }
-
-export function openPopupWithButton(popup, button) {
-	button.addEventListener('click', (evt) => {
-		openPopup(popup);
-	})
-}
