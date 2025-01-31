@@ -27,7 +27,7 @@ export const getInitialCards = () => fetchAndReturnJSON("cards", "GET");
 
 export const getProfileInfo = () => fetchAndReturnJSON("users/me", "GET");
 
-export const patchProfileInfo = (patch) => fetchAndReturnJSON("users/me", "PATCH", patch);
+export const changeProfileInfo = (name, about) => fetchAndReturnJSON("users/me", "PATCH", {name: name, about: about});
 
 export const addNewCard = (newCard) => fetchAndReturnJSON("cards", "POST", newCard);
 
@@ -37,4 +37,4 @@ export const likeCard = (cardId) => fetchAndReturnJSON(`cards/likes/${cardId}`, 
 
 export const unlikeCard = (cardId) => fetchAndReturnJSON(`cards/likes/${cardId}`, "DELETE");
 
-export const changeProfilePicture = (link) => fetchAndReturnJSON("users/me/avatar", "PATCH", {avatar: link});
+export const changeAvatar = (link) => fetchAndReturnJSON("users/me/avatar", "PATCH", {avatar: link});
